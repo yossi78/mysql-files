@@ -2,7 +2,6 @@ package com.check_point.users_managment.controller;
 
 import com.check_point.users_managment.entity.User;
 import com.check_point.users_managment.service.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +9,8 @@ import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+
 
 @RestController
 @RequestMapping(path = "/user")
