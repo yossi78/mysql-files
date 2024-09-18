@@ -44,11 +44,6 @@ public class UserService {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-//    public User findUserById(Long userId) {
-//        return userRepository.findById(userId)
-//                .orElseThrow(() -> new ResourceAccessException("User Id " + userId + " not found"));
-//
-//    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
