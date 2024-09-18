@@ -6,12 +6,18 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping(path = "/user")
+@EnableRetry
 public class UserController {
     private final UserService userService;
 
@@ -26,12 +32,21 @@ public class UserController {
         return new ResponseEntity<>(addedUser, HttpStatus.CREATED);
     }
 
+    @Retryable(value = { Exception.class },maxAttempts = 5,backoff = @Backoff(delay = 5000))
     @GetMapping(path = "/{id}")
     public ResponseEntity<User> findUserById(@PathVariable("id") Long id) {
-        return userService.findUserById(id);
+        ResponseEntity<User> userEntity=null;
+        try {
+            userEntity = userService.findUserById(id);
+        } catch (Exception e) {
+            System.out.println("Failed to get user from DB - try again");
+            throw e;
+        }
+        return userEntity;
     }
 
     @GetMapping
+    @Retryable(value = { Exception.class },maxAttempts = 5,backoff = @Backoff(delay = 5000))
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> e = userService.getAllUsers();
         return ResponseEntity.ok(e);
