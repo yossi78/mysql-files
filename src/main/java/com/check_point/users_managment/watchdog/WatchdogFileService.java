@@ -19,7 +19,7 @@ import java.util.List;
 public class WatchdogFileService {
 
 
-    private static final String WATCHDOG_FILES_PATH = "c/temp/usersService/watchdog/";
+    private static final String WATCHDOG_FILES_PATH = "c:\\temp\\user-service\\watchdog\\";
     private final ObjectMapper objectMapper;
 
     public WatchdogFileService() {
@@ -71,8 +71,10 @@ public class WatchdogFileService {
 
     }
 
-    public WatchdogOperation readOperation(String fileName) throws JsonProcessingException {
-        return objectMapper.readValue(WATCHDOG_FILES_PATH + fileName, WatchdogOperation.class);
+    public WatchdogOperation readOperation(String fileName) throws IOException {
+        File file = new File(WATCHDOG_FILES_PATH + fileName);
+        return  objectMapper.readValue(file, WatchdogOperation.class);
+       // return objectMapper.readValue(WATCHDOG_FILES_PATH + fileName, WatchdogOperation.class);
     }
 
 }
