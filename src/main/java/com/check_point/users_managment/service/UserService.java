@@ -5,6 +5,7 @@ package com.check_point.users_managment.service;
 import com.check_point.users_managment.entity.User;
 import com.check_point.users_managment.exception.ResourceNotFoundException;
 import com.check_point.users_managment.repository.UserRepository;
+import com.check_point.users_managment.utils.PasswordUtil;
 import com.check_point.users_managment.watchdog.AddWatchdogOperation;
 import com.check_point.users_managment.watchdog.UpdateWatchdogOperation;
 import com.check_point.users_managment.watchdog.WatchdogFileService;
@@ -25,8 +26,8 @@ public class UserService {
     private final WatchdogFileService watchdogFileService;
 
     public User addUser(User user, boolean retry) {
-
         try {
+            user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
             return userRepository.save(user);
         } catch (Exception e) {
             if (retry) {
