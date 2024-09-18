@@ -10,6 +10,9 @@ import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import org.springframework.retry.annotation.Recover;
+
+
 
 
 @RestController
@@ -42,18 +45,36 @@ public class UserController {
         return userEntity;
     }
 
+
     @GetMapping
-    @Retryable(value = { Exception.class },maxAttempts = 5,backoff = @Backoff(delay = 5000))
+    @Retryable(value = { Exception.class }, maxAttempts = 5, backoff = @Backoff(delay = 5000))
     public ResponseEntity<List<User>> getAllUsers() {
-        List<User> e = userService.getAllUsers();
-        return ResponseEntity.ok(e);
+        try {
+            List<User> users = userService.getAllUsers();
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            System.out.println("Failed to get users from DB - try again");
+            throw e;
+        }
     }
 
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
-        userService.deleteUserById(id,true);
-        return ResponseEntity.ok("User Deleted Successfully");
+        try {
+            userService.deleteUserById(id, true);
+            return ResponseEntity.ok("User Deleted Successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error occurred while deleting the user: " + e.getMessage());
+        }
+    }
+
+
+
+    @Recover
+    public void recover(Exception e){
+        System.out.println("Failed to fetch from DB after several attempts" +e +  e.getMessage());
     }
 
 
