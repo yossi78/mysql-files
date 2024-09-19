@@ -32,12 +32,14 @@ public class WatchdogRetryService {
         {
             switch (userAction.getOperationType()) {
                 case ADD:
+                    log.info("Add new user from file ");
                     User user = userService.addUser(userAction.getUser(),false);
                     if(user.getId()!=null){
                         FileUtil.deleteFile(user.getFilePath());
                     }
                     break;
                 case DELETE:
+                    log.info("Delete user from file ");
                     Boolean result = userService.deleteUserById(userAction.getUser().getId(),false);
                     if(result){
                         FileUtil.deleteFile(userAction.getUser().getFilePath());
