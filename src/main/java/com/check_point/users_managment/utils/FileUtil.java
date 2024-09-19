@@ -45,4 +45,27 @@ public class FileUtil {
         return objectMapper.readValue(fileToRead, clazz);
     }
 
+
+    public static boolean deleteFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            file.delete();
+        }catch (Exception e){
+            System.out.println("Failed to delete file");
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean deleteFile(String path, String fileName) {
+        try {
+            File file = new File(path + fileName);
+            file.delete();
+        }catch (Exception e){
+            System.out.println("Failed to delete file");
+            return false;
+        }
+        return true;
+    }
+
 }

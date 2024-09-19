@@ -30,7 +30,9 @@ public class WatchdogFileService {
 
     public void appendOperation(UserAction userAction) {
         try {
-            FileUtil.saveToFile(WATCHDOG_FILES_PATH,System.currentTimeMillis() + ".json",userAction);
+            String fileName = System.currentTimeMillis() + ".json";
+            userAction.getUser().setFilePath(WATCHDOG_FILES_PATH+fileName);
+            FileUtil.saveToFile(WATCHDOG_FILES_PATH,fileName,userAction);
         } catch (IOException e) {
             log.error("Couldn't create new watchdog file the exception is:", e);
         }
@@ -75,6 +77,7 @@ public class WatchdogFileService {
         try {
             File file = new File(WATCHDOG_FILES_PATH + fileName);
             userAction = objectMapper.readValue(file, UserAction.class);
+            userAction.getUser().setFilePath(WATCHDOG_FILES_PATH + fileName);
         }catch (Exception e){
             System.out.println("Failed to parse file: " + e.getMessage());
         }

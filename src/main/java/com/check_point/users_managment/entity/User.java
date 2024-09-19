@@ -1,6 +1,7 @@
 package com.check_point.users_managment.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
@@ -15,7 +16,13 @@ import java.io.Serializable;
 @Builder
 @Entity(name = "users")
 public class User implements Serializable {
+
+    @JsonIgnore
     private static final long serialVersionUID = 1L;
+
+
+    @JsonIgnore
+    private String filePath=null;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

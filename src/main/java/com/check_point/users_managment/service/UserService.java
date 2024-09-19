@@ -7,6 +7,7 @@ import com.check_point.users_managment.exception.ResourceNotFoundException;
 import com.check_point.users_managment.repository.UserRepository;
 import com.check_point.users_managment.response.UserResponse;
 import com.check_point.users_managment.utils.ConvertUtil;
+import com.check_point.users_managment.utils.FileUtil;
 import com.check_point.users_managment.utils.PasswordUtil;
 import com.check_point.users_managment.watchdog.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,7 +31,11 @@ public class UserService {
     public User addUser(User user, boolean retry) {
         try {
             user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
-            return userRepository.save(user);
+            String filePath = user.getFilePath();
+            User savedUser= userRepository.save(user);
+            FileUtil.deleteFile(filePath);
+            savedUser.setFilePath(null);
+            return savedUser;
         } catch (Exception e) {
             if (retry) {
                 UserAction userAction = UserAction.builder().operationType(OperationType.ADD).user(user).build();
@@ -65,6 +70,8 @@ public class UserService {
             if (!exist) {
                 throw new ResourceNotFoundException("User not found Id " + id);
             }
+            User user = userRepository.findById(id).get();
+            FileUtil.deleteFile(user.getFilePath());
             userRepository.deleteById(id);
         } catch (ResourceNotFoundException e) {
             System.out.println("Error: " + e.getMessage());
