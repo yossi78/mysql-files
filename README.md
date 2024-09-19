@@ -34,7 +34,7 @@ It supports scaling up and down with ease, and if a failure occurs, it can recov
 
 
 
-3 HOW TO RUN THE MYSQL DATABASE CONTAINER:
+# HOW TO RUN THE MYSQL DATABASE CONTAINER:
 ---------------------------------------------------------------------------------------------------------
 
 #) Open a terminal at the root of the project
