@@ -1,48 +1,43 @@
+# Project Information and Limitations
 
-INFORMATION AND LIMITATIONS:
----------------------------------------------------------------------------------------------------------
+---
 
+## Retry Mechanism for Database Failures
 
-# WATCH-DOG:
-I have implemented a watchdog mechanism to handle database connectivity issues.
-If a failure occurs, the watchdog will capture the exception and persist the CRUD action 
-and the entity in a file on the hard drive. Additionally, a scheduled task will read these files,
-parse their contents, and update the database accordingly.
+There are multiple strategies to implement a retry mechanism that supports database failures:
 
-# EVENTUAL CONSISTENCY :
-If there is a database failure lasting several minutes and entities are saved to files during this time,
-there could be a discrepancy when the client makes a GET user API call. In this gap, 
-the returned information might be outdated or inaccurate until the watchdog updates the database 
-with the data from the files.
+1. **Eventual Consistency**  
+   In case the database becomes unavailable, CRUD operations will be temporarily saved as JSON files. Once the database is restored, all changes will be synchronized. However, during the synchronization process, there may be some inconsistencies.
 
-# SQLite:
-To ensure backup for all CRUD operations, including GET user, we will duplicate the database using SQLite.
-In the event of a database failure, we will retrieve data from the backup database. 
-I will implement a job to synchronize the two databases every few seconds. 
-However, the challenge here is managing the duplication of the database.
+2. **High Availability**  
+   This approach involves using an additional database like SQLite. All changes are synchronized with both databases in real-time. If the main database (MySQL) fails, SQLite will serve as a backup. When MySQL is restored, the two databases will be synchronized. This ensures high availability, but at the cost of data duplication.
 
-# AWS  AURORA:
-An alternative solution is to use AWS Aurora DB, which, 
-while more expensive, offers fast performance and built-in backup capabilities. 
-It supports scaling up and down with ease, and if a failure occurs, it can recover quickly.
+In this solution, I have chosen the **Eventual Consistency** approach. Generally, I recommend using **AWS Aurora (MySQL)** as the main database, as it is a managed service that provides several high-availability features.
 
+For more information on AWS Aurora and its high-availability features, visit the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html).
 
-# INSTRUCTIONS:
----------------------------------------------------------------------------------------------------------
-#) Please open the Diagram file from the "resources" package.
-#) Please open the UI-Diagram  from the "resources" package.
-#) Please download the Postman collection from the "resources" package.
-#) Update the path in the "WatchdogFileService" class according to your operating system.
+---
 
+## Architecture Diagrams
 
-# HOW TO RUN THE MYSQL DATABASE CONTAINER:
----------------------------------------------------------------------------------------------------------
+### Backend Diagram:
+![Backend Diagram](img.png)
 
-#) Open a terminal at the root of the project
+### Frontend Diagram:
+![Frontend Diagram](img_1.png)
 
-#) Run the following command:
-    docker-compose up -d
+---
 
+## Instructions
 
+1. Download the Postman collection from the "resources" package.
+2. Update the file path in the `WatchdogFileService` class to match your operating system.
 
----------------------------------------------------------------------------------------------------------
+---
+
+## Running the MySQL Database Container
+
+1. Open a terminal in the root directory of the project.
+2. Run the following command to start the MySQL container:
+   ```bash
+   docker-compose up -d

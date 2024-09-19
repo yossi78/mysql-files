@@ -32,6 +32,7 @@ public class UserResponse implements Serializable {
     private String email;
 
 
+    // Field will not be returned to prevent security vulnerability
     @JsonIgnore
     private String password;
 }

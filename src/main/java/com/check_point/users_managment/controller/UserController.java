@@ -84,11 +84,12 @@ public class UserController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
         try {
-            userService.deleteUserById(id, true);
-            return ResponseEntity.ok("User Deleted Successfully");
-        } catch (ResourceNotFoundException e) {
+            Boolean result = userService.deleteUserById(id, true);
+            if(result){
+                return ResponseEntity.ok("User Deleted Successfully");
+            }
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User not found: " + e.getMessage());
+                    .body("User not found ");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error occurred while deleting the user: " + e.getMessage());

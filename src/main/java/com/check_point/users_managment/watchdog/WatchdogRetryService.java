@@ -1,7 +1,9 @@
 package com.check_point.users_managment.watchdog;
 
 
+import com.check_point.users_managment.entity.User;
 import com.check_point.users_managment.service.UserService;
+import com.check_point.users_managment.utils.FileUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -30,10 +32,16 @@ public class WatchdogRetryService {
         {
             switch (userAction.getOperationType()) {
                 case ADD:
-                    userService.addUser(userAction.getUser(),false);
+                    User user = userService.addUser(userAction.getUser(),false);
+                    if(user.getId()!=null){
+                        FileUtil.deleteFile(user.getFilePath());
+                    }
                     break;
                 case DELETE:
-                    userService.deleteUserById(userAction.getUser().getId(),false);
+                    Boolean result = userService.deleteUserById(userAction.getUser().getId(),false);
+                    if(result){
+                        FileUtil.deleteFile(userAction.getUser().getFilePath());
+                    }
                     break;
             }
         }
