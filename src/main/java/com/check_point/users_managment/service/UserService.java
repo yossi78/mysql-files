@@ -51,17 +51,24 @@ public class UserService {
 
 
     public void deleteUserById(Long id, boolean retry) {
-        boolean exist = userRepository.existsById(id);
-        if (!exist) {
-            throw new ResourceNotFoundException("User not found Id " + id);
+        try {
+            boolean exist = userRepository.existsById(id);
+            if (!exist) {
+                throw new ResourceNotFoundException("User not found Id " + id);
+            }
+            userRepository.deleteById(id);
+        } catch (Exception e) {
+            if (retry) {
+                User user = User.builder().id(id).build();
+                UserAction userAction = UserAction.builder().operationType(OperationType.DELETE).user(user).build();
+                watchdogFileService.appendOperation(userAction);
+            }
         }
-        userRepository.deleteById(id);
+
+
+
     }
 
-    //    public User findFirstNameAndEmail(String firstname,String email){
-//        return userRepository.findByFirstNameAndEmail(firstname,email);
-//    }
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+
+
 }

@@ -7,6 +7,5 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public enum OperationType {
 
     ADD,
-    UPDATE,
     DELETE
 }
