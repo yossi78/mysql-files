@@ -1,56 +1,47 @@
 
-INFORMATION AND LIMITATIONS :
------------------------------------------------------------------------------------------------
-
-#) Watch Dog
-I added a capability of watchdog - in case of failure in connectivity with the data base then
-a part of handling the exception which will be thrown the watchdog will persist the CRUD action
-and the entity itself in a File format in hard drive . Also I will schedule mechanism which will
-read those files and parse them and update the data base accordingly .
+INFORMATION AND LIMITATIONS:
+---------------------------------------------------------------------------------------------------------
 
 
-#) Eventual consistency
-In case of failure in the DB for several minutes and entities will be saved into files
-then DB will return and client will  run GET user api call before the watchdog will save entities
-to DB from files then in this GAP the return info will not be accurate and not updated
+# WATCH-DOG:
+I have implemented a watchdog mechanism to handle database connectivity issues.
+If a failure occurs, the watchdog will capture the exception and persist the CRUD action 
+and the entity in a file on the hard drive. Additionally, a scheduled task will read these files,
+parse their contents, and update the database accordingly.
+
+# EVENTUAL CONSISTENCY :
+If there is a database failure lasting several minutes and entities are saved to files during this time,
+there could be a discrepancy when the client makes a GET user API call. In this gap, 
+the returned information might be outdated or inaccurate until the watchdog updates the database 
+with the data from the files.
+
+# SQLite:
+To ensure backup for all CRUD operations, including GET user, we will duplicate the database using SQLite.
+In the event of a database failure, we will retrieve data from the backup database. 
+I will implement a job to synchronize the two databases every few seconds. 
+However, the challenge here is managing the duplication of the database.
+
+# AWS  AURORA:
+An alternative solution is to use AWS Aurora DB, which, 
+while more expensive, offers fast performance and built-in backup capabilities. 
+It supports scaling up and down with ease, and if a failure occurs, it can recover quickly.
 
 
-#)  SQLite
-In order that we will backup all the CRUD operations include Get user we will need to duplicate the data base (SQLite)
-and the in case of DB failure we will fetch from backup DB. I will add a job that will sync between those two data bases
-every several seconds . the problem is duplication of the data base .
+# INSTRUCTIONS:
+---------------------------------------------------------------------------------------------------------
+#) Please download the Postman collection from the "resources" package.
+#) Update the path in the "WatchdogFileService" class according to your operating system.
 
 
-#) AWS  Aurora
-Another solution can be choosing AWS  Aurora DB (disadvantage - more expensive)
-but it is very fast and has capabilities of backup , always has a capability of run more instances
-scale up and scale down .and if it fall then it will be able to recover very quickly
 
+3 HOW TO RUN THE MYSQL DATABASE CONTAINER:
+---------------------------------------------------------------------------------------------------------
 
-INSTRUCTIONS :
------------------------------------------------------------------------------------------------
+#) Open a terminal at the root of the project
 
-#) Please download the postman collection from the "resources" package
-#) Please update the path in class of "WatchdogFileService" - >  consider your OS
-
-
-HOW TO RUN THE MYSQL DATA BASE CONTAINER :
------------------------------------------------------------------------------------------------
-#) Open terminal on the root of this project 
 #) Run the following command:
-docker-compose up -d
+    docker-compose up -d
 
 
-HOW TO RUN THE DOCKER CONTAINER WHICH RUN THE JAR OF THIS SERVICE :
------------------------------------------------------------------------------------------------
-#) Open the terminal
 
-#) Navigate to the following path :
-C:\Dev\Java\home-work\users-managment\src\main\resources
-
-#) Run the following command to create docker image :
-docker build -t   user-managment  .
-
-#) Run the following command to run the docker image and create the container:
-docker run --name user-managment-container -p 8080:8080 user-managment
-~~~~
+---------------------------------------------------------------------------------------------------------
