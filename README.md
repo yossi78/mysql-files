@@ -1,33 +1,4 @@
 
-INSTRUCTIONS :
------------------------------------------------------------------------------------------------
-
-#) Please download the postman collection from the "resources" package
-#) Please update the path in class of "WatchdogFileService" - >  consider your OS
-
-
-HOW TO RUN THE MYSQL DATA BASE CONTAINER :
------------------------------------------------------------------------------------------------
-#) Open terminal on the root of this project 
-#) Run the following command:
-docker-compose up -d
-
-
-HOW TO RUN THE DOCKER CONTAIN WHICH RUN THE JAR OF THIS SERVICE :
------------------------------------------------------------------------------------------------
-#) Open the terminal
-
-#) Navigate to the following path :
-C:\Dev\Java\home-work\users-managment\src\main\resources
-
-#) Run the following command to create docker image :
-docker build -t   user-managment  .
-
-#) Run the following command to run the docker image and create the container:
-docker run --name user-managment-container -p 8080:8080 user-managment
-~~~~
-
-
 INFORMATION AND LIMITATIONS :
 -----------------------------------------------------------------------------------------------
 
@@ -53,4 +24,33 @@ every several seconds . the problem is duplication of the data base .
 #) AWS  Aurora
 Another solution can be choosing AWS  Aurora DB (disadvantage - more expensive)
 but it is very fast and has capabilities of backup , always has a capability of run more instances
-scale up and scale down .and if it fall then it will be able to recover very quickly 
+scale up and scale down .and if it fall then it will be able to recover very quickly
+
+
+INSTRUCTIONS :
+-----------------------------------------------------------------------------------------------
+
+#) Please download the postman collection from the "resources" package
+#) Please update the path in class of "WatchdogFileService" - >  consider your OS
+
+
+HOW TO RUN THE MYSQL DATA BASE CONTAINER :
+-----------------------------------------------------------------------------------------------
+#) Open terminal on the root of this project 
+#) Run the following command:
+docker-compose up -d
+
+
+HOW TO RUN THE DOCKER CONTAINER WHICH RUN THE JAR OF THIS SERVICE :
+-----------------------------------------------------------------------------------------------
+#) Open the terminal
+
+#) Navigate to the following path :
+C:\Dev\Java\home-work\users-managment\src\main\resources
+
+#) Run the following command to create docker image :
+docker build -t   user-managment  .
+
+#) Run the following command to run the docker image and create the container:
+docker run --name user-managment-container -p 8080:8080 user-managment
+~~~~
