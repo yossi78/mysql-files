@@ -2,6 +2,7 @@ package com.check_point.users_managment.watchdog;
 
 
 
+import com.check_point.users_managment.utils.FileUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -27,11 +28,9 @@ public class WatchdogFileService {
         this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
-    public void appendOperation(WatchdogOperation watchdogOperation) {
+    public void appendOperation(UserAction userAction) {
         try {
-            File newWatchDogFile = new File(WATCHDOG_FILES_PATH + System.currentTimeMillis() + ".json");
-            newWatchDogFile.createNewFile();
-            objectMapper.writeValue(newWatchDogFile, watchdogOperation);
+            FileUtil.saveToFile(WATCHDOG_FILES_PATH,System.currentTimeMillis() + ".json",userAction);
         } catch (IOException e) {
             log.error("Couldn't create new watchdog file the exception is:", e);
         }
@@ -56,9 +55,9 @@ public class WatchdogFileService {
     }
 
 
-    public List<WatchdogOperation> readAllOperations() {
+    public List<UserAction> readAllOperations() {
         try {
-            List<WatchdogOperation> watchdogOperations = new ArrayList<>();
+            List<UserAction> watchdogOperations = new ArrayList<>();
             List<String> fileNames = getAllFileNames();
             for (String fileName : fileNames) {
                 watchdogOperations.add(readOperation(fileName));
@@ -71,10 +70,15 @@ public class WatchdogFileService {
 
     }
 
-    public WatchdogOperation readOperation(String fileName) throws IOException {
-        File file = new File(WATCHDOG_FILES_PATH + fileName);
-        return  objectMapper.readValue(file, WatchdogOperation.class);
-       // return objectMapper.readValue(WATCHDOG_FILES_PATH + fileName, WatchdogOperation.class);
+    public UserAction readOperation(String fileName) {
+        UserAction userAction=null;
+        try {
+            File file = new File(WATCHDOG_FILES_PATH + fileName);
+            userAction = objectMapper.readValue(file, UserAction.class);
+        }catch (Exception e){
+            System.out.println("Failed to parse file: " + e.getMessage());
+        }
+        return userAction;
     }
 
 }

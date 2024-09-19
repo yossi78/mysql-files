@@ -6,9 +6,7 @@ import com.check_point.users_managment.entity.User;
 import com.check_point.users_managment.exception.ResourceNotFoundException;
 import com.check_point.users_managment.repository.UserRepository;
 import com.check_point.users_managment.utils.PasswordUtil;
-import com.check_point.users_managment.watchdog.AddWatchdogOperation;
-import com.check_point.users_managment.watchdog.UpdateWatchdogOperation;
-import com.check_point.users_managment.watchdog.WatchdogFileService;
+import com.check_point.users_managment.watchdog.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,7 +29,8 @@ public class UserService {
             return userRepository.save(user);
         } catch (Exception e) {
             if (retry) {
-                watchdogFileService.appendOperation(new AddWatchdogOperation(user));
+                UserAction userAction = UserAction.builder().operationType(OperationType.ADD).user(user).build();
+                watchdogFileService.appendOperation(userAction);
             }
         }
         return user;

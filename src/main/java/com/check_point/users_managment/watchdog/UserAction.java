@@ -4,23 +4,16 @@ package com.check_point.users_managment.watchdog;
 import com.check_point.users_managment.entity.User;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
 @JsonSerialize
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class RemoveWatchdogOperation implements WatchdogOperation{
-
+@Builder
+public class UserAction {
+    private OperationType operationType;
     private User user;
-
-    @Override
-    public OperationType operationType() {
-        return OperationType.DELETE;
-    }
-
-    @Override
-    public User user() {
-        return this.user;
-    }
-
 }
