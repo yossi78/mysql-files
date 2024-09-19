@@ -5,8 +5,11 @@ package com.check_point.users_managment.service;
 import com.check_point.users_managment.entity.User;
 import com.check_point.users_managment.exception.ResourceNotFoundException;
 import com.check_point.users_managment.repository.UserRepository;
+import com.check_point.users_managment.response.UserResponse;
+import com.check_point.users_managment.utils.ConvertUtil;
 import com.check_point.users_managment.utils.PasswordUtil;
 import com.check_point.users_managment.watchdog.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -37,10 +41,15 @@ public class UserService {
     }
 
 
-    public ResponseEntity<User> findUserById(Long userId) {
-        return userRepository.findById(userId)
-                .map(user -> new ResponseEntity<>(user, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<UserResponse> findUserById(Long userId) throws JsonProcessingException {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            UserResponse userResponse = ConvertUtil.convertObject(user,UserResponse.class);
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -57,6 +66,9 @@ public class UserService {
                 throw new ResourceNotFoundException("User not found Id " + id);
             }
             userRepository.deleteById(id);
+        } catch (ResourceNotFoundException e) {
+            System.out.println("Error: " + e.getMessage());
+            throw e;
         } catch (Exception e) {
             if (retry) {
                 User user = User.builder().id(id).build();
@@ -64,9 +76,6 @@ public class UserService {
                 watchdogFileService.appendOperation(userAction);
             }
         }
-
-
-
     }
 
 
