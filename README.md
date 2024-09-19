@@ -30,9 +30,9 @@ It supports scaling up and down with ease, and if a failure occurs, it can recov
 # INSTRUCTIONS:
 ---------------------------------------------------------------------------------------------------------
 #) Please open the Diagram file from the "resources" package.
+#) Please open the UI-Diagram  from the "resources" package.
 #) Please download the Postman collection from the "resources" package.
 #) Update the path in the "WatchdogFileService" class according to your operating system.
-
 
 
 # HOW TO RUN THE MYSQL DATABASE CONTAINER:
