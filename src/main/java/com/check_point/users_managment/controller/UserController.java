@@ -22,7 +22,7 @@ import org.springframework.retry.annotation.Recover;
 
 
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/api/user")
 @EnableRetry
 public class UserController {
     private final UserService userService;
