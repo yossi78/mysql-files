@@ -25,7 +25,6 @@ public class FileUtil {
             File file = new File(filePath);
             file.delete();
         }catch (Exception e){
-            System.out.println("Failed to delete file");
             return false;
         }
         return true;

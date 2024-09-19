@@ -53,6 +53,7 @@ public class UserService {
             UserResponse userResponse = ConvertUtil.convertObject(user,UserResponse.class);
             return new ResponseEntity<>(userResponse, HttpStatus.OK);
         } else {
+            log.info("User has not been found id:"+userId);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -73,7 +74,7 @@ public class UserService {
             userRepository.deleteById(id);
             return true;
         } catch (ResourceNotFoundException e) {
-            System.out.println("Error: " + e.getMessage());
+            log.error("User not been found: " + e.getMessage());
             return false;
         } catch (Exception e) {
             if (retry) {
