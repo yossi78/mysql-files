@@ -18,10 +18,12 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @JsonIgnore
+    @Transient
     private static final long serialVersionUID = 1L;
 
 
     @JsonIgnore
+    @Transient
     private String filePath=null;
 
     @Id
