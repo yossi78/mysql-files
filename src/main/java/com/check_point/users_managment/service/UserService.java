@@ -71,8 +71,8 @@ public class UserService {
                 throw new ResourceNotFoundException("User not found Id " + id);
             }
             User user = userRepository.findById(id).get();
-            FileUtil.deleteFile(user.getFilePath());
             userRepository.deleteById(id);
+            FileUtil.deleteFile(user.getFilePath());
         } catch (ResourceNotFoundException e) {
             System.out.println("Error: " + e.getMessage());
             throw e;
