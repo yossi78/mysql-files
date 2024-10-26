@@ -1,4 +1,9 @@
-package com.check_point.users_managment.service;
+package com.example.mysqlfiles.service;
+import com.example.mysqlfiles.entity.User;
+import com.example.mysqlfiles.repository.UserRepository;
+import com.example.mysqlfiles.response.UserResponse;
+import com.example.mysqlfiles.watchdog.UserAction;
+import com.example.mysqlfiles.watchdog.WatchdogFileService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
