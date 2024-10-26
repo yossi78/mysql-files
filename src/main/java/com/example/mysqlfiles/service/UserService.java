@@ -1,6 +1,4 @@
 package com.example.mysqlfiles.service;
-
-
 import com.example.mysqlfiles.entity.User;
 import com.example.mysqlfiles.exception.ResourceNotFoundException;
 import com.example.mysqlfiles.repository.UserRepository;
@@ -17,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 

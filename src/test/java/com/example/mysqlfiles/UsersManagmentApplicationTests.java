@@ -1,4 +1,4 @@
-package com.check_point.users_managment;
+package com.example.mysqlfiles;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
