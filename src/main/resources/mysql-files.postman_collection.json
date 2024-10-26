@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "60dc76fa-fc5d-49e2-aa12-5185d953441a",
-		"name": "users-managment",
+		"name": "mysql-files",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "513031"
 	},
