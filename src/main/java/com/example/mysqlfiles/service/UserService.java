@@ -1,4 +1,16 @@
 package com.example.mysqlfiles.service;
+
+
+import com.example.mysqlfiles.entity.User;
+import com.example.mysqlfiles.exception.ResourceNotFoundException;
+import com.example.mysqlfiles.repository.UserRepository;
+import com.example.mysqlfiles.response.UserResponse;
+import com.example.mysqlfiles.utils.ConvertUtil;
+import com.example.mysqlfiles.utils.FileUtil;
+import com.example.mysqlfiles.utils.PasswordUtil;
+import com.example.mysqlfiles.watchdog.OperationType;
+import com.example.mysqlfiles.watchdog.UserAction;
+import com.example.mysqlfiles.watchdog.WatchdogFileService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,7 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -37,7 +50,7 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            UserResponse userResponse = ConvertUtil.convertObject(user,UserResponse.class);
+            UserResponse userResponse = ConvertUtil.convertObject(user, UserResponse.class);
             return new ResponseEntity<>(userResponse, HttpStatus.OK);
         } else {
             log.info("User has not been found id:"+userId);
