@@ -1,4 +1,4 @@
-package com.check_point.users_managment;
+package com.example.mysqlfiles;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

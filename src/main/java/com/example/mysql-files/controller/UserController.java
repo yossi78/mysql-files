@@ -1,7 +1,6 @@
 package com.check_point.users_managment.controller;
 
 import com.check_point.users_managment.entity.User;
-import com.check_point.users_managment.exception.ResourceNotFoundException;
 import com.check_point.users_managment.response.UserResponse;
 import com.check_point.users_managment.service.UserService;
 import com.check_point.users_managment.utils.ConvertUtil;
