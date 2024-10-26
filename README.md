@@ -31,7 +31,8 @@ For more information on AWS Aurora and its high-availability features, visit the
 ## Instructions
 
 1. Download the Postman collection from the "resources" package.
-2. Update the file path in the `WatchdogFileService` class to match your operating system.
+2. Create new folder in the hard drive which appear in class of "WatchdogFileService"
+    c:\temp\watchdog\
 
 ---
 

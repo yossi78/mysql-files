@@ -16,7 +16,7 @@ import java.util.List;
 public class WatchdogFileService {
 
 
-    private static final String WATCHDOG_FILES_PATH = "c:\\temp\\user-service\\watchdog\\";
+    private static final String WATCHDOG_FILES_PATH = "c:\\temp\\watchdog\\";
     private final ObjectMapper objectMapper;
 
     public WatchdogFileService() {
