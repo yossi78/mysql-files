@@ -1,13 +1,9 @@
-package com.check_point.users_managment.response;
-
-
-
+package com.example.mysqlfiles.response;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
 
 @Data

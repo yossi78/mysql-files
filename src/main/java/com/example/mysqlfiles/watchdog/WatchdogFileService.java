@@ -1,13 +1,8 @@
-package com.check_point.users_managment.watchdog;
-
-
-
-import com.check_point.users_managment.utils.FileUtil;
+package com.example.mysqlfiles.watchdog;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

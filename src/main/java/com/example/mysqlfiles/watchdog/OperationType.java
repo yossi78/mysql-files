@@ -1,4 +1,4 @@
-package com.check_point.users_managment.watchdog;
+package com.example.mysqlfiles.watchdog;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

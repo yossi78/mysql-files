@@ -1,4 +1,4 @@
-package com.check_point.users_managment.utils;
+package com.example.mysqlfiles.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

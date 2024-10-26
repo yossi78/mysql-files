@@ -1,7 +1,4 @@
-package com.check_point.users_managment.watchdog;
-
-
-import com.check_point.users_managment.entity.User;
+package com.example.mysqlfiles.watchdog;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

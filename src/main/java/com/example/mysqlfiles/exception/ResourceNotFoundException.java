@@ -1,4 +1,4 @@
-package com.check_point.users_managment.exception;
+package com.example.mysqlfiles.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

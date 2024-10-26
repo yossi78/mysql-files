@@ -1,12 +1,4 @@
 package com.check_point.users_managment.service;
-
-
-
-import com.check_point.users_managment.entity.User;
-import com.check_point.users_managment.repository.UserRepository;
-import com.check_point.users_managment.response.UserResponse;
-import com.check_point.users_managment.watchdog.UserAction;
-import com.check_point.users_managment.watchdog.WatchdogFileService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,10 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

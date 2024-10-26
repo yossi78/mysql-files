@@ -1,15 +1,9 @@
-package com.check_point.users_managment.watchdog;
-
-
-import com.check_point.users_managment.entity.User;
-import com.check_point.users_managment.service.UserService;
-import com.check_point.users_managment.utils.FileUtil;
+package com.example.mysqlfiles.watchdog;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.scheduling.annotation.Scheduled;
-
 import java.util.List;
 
 

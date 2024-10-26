@@ -1,4 +1,4 @@
-package com.check_point.users_managment.utils;
+package com.example.mysqlfiles.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

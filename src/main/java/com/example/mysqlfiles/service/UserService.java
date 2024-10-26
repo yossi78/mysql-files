@@ -1,16 +1,4 @@
-package com.check_point.users_managment.service;
-
-
-import com.check_point.users_managment.entity.User;
-import com.check_point.users_managment.exception.ResourceNotFoundException;
-import com.check_point.users_managment.repository.UserRepository;
-import com.check_point.users_managment.response.UserResponse;
-import com.check_point.users_managment.utils.ConvertUtil;
-import com.check_point.users_managment.utils.FileUtil;
-import com.check_point.users_managment.utils.PasswordUtil;
-import com.check_point.users_managment.watchdog.OperationType;
-import com.check_point.users_managment.watchdog.UserAction;
-import com.check_point.users_managment.watchdog.WatchdogFileService;
+package com.example.mysqlfiles.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor
